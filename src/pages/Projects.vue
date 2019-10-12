@@ -61,9 +61,9 @@ export default {
 		}
 	},
 	mounted() {
-		// this.fetchProjects().then( () => {
-		// 	this.projectsToShow = this.getProjects;
-		// });
+		this.fetchProjects().then( () => {
+			this.projectsToShow = this.getProjects;
+		});
 		
 	},
 	computed: {

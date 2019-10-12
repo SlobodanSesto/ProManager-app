@@ -124,21 +124,21 @@ export default {
         pass: this.pass
       }
       //testing
-      this.$f7router.navigate('/projects/');
-      // api.loginApi(params).then( res => {
-      //   console.log(res);
-      //   if(res.data.status === 'ERR') {
-      //     // display failed login msg
-      //   } else if (res.data.status === 'OK') {
-      //     // push to /projects route
-      //     this.setUser(res.data.user);
-      //     localStorage.setItem('sid', res.data.sid);
-      //     this.$f7router.navigate('/projects/');
-      //     console.log(this.getUser)
-      //   } else {
-      //     // an error occured
-      //   }
-      // });
+      // this.$f7router.navigate('/projects/');
+      api.loginApi(params).then( res => {
+        console.log(res);
+        if(res.data.status === 'ERR') {
+          // display failed login msg
+        } else if (res.data.status === 'OK') {
+          // push to /projects route
+          this.setUser(res.data.user);
+          localStorage.setItem('sid', res.data.sid);
+          this.$f7router.navigate('/projects/');
+          console.log(this.getUser)
+        } else {
+          // an error occured
+        }
+      });
       
     }
   }

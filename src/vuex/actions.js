@@ -1,11 +1,11 @@
 import api from '../api/index';
 
 export default {
-  fetchProjects:({commit}, params) => {
+	fetchProjects:({commit}, params) => {
 		console.log("action");
 		return api.projects().then( res => {
 			console.log(res);
-			commit('STORE_PROJECTS', res.data.data);
+			commit('STORE_PROJECTS', res.data);
 		})
 	},
 	setUser:({commit}, params) => {
