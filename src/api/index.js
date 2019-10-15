@@ -36,4 +36,26 @@ export default {
 			params: params
 		});
 	},
+	getTaskFeed: (id, params) => {
+		return baseURL({
+			url: `/tasks/${id}/feeds`,
+			method: 'GET',
+			params: params
+		});
+	},
+	sendMessage: (id, formData) => {
+		return baseURL({
+			url: `/tasks/${id}/feeds`,
+			method: 'POST',
+			data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' }
+		});
+	},
+	getFeed: (params) => {
+		return baseURL({
+			url: 'users/feeds',
+			method: 'GET',
+			params: params
+		});
+	},
 }

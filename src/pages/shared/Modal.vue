@@ -12,7 +12,7 @@
 					<div v-if="this.project.tags.length > 0" class="project-tags">
 						<span>Tags: </span>
 						<div class="tags-wrap">
-							<span v-for="tag in this.project.tags">
+							<span v-for="(tag, i) in this.project.tags" :key="i">
 								<!-- {{tag.tag_id}} {{tag.tag_text}} -->
 								<badge :_badge_text="tag.tag_text"></badge>
 							</span>
@@ -21,7 +21,7 @@
 					<div class="project-users">
 						<span>Users:</span>
 						<div class="users-wrap">
-							<span class="one-user" v-for="user in this.project.users">
+							<span class="one-user" v-for="(user, i) in this.project.users" :key="i">
 								{{ user.name }} {{ user.surname }} <badge v-if="user.admin === 'true'" :_admin_badge="true"></badge>
 							</span>
 						</div>
@@ -55,9 +55,11 @@
 				
 			</div>
 			<f7-preloader v-if="!showInfo" color="blue" ></f7-preloader>
-			<div class="project-btn-wrap">
-				<f7-button fill class="notification-btn edit-pro-btn ">Edit project</f7-button>
-				<f7-button outline class="notification-btn">Notifications</f7-button>
+			<div class="pro-btn-container">
+				<div class="project-btn-wrap">
+					<f7-button fill class="notification-btn edit-pro-btn">Edit project</f7-button>
+					<f7-button outline class="notification-btn">Notifications</f7-button>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -203,9 +205,17 @@ export default {
 		display: flex;
 		flex-direction: row;
 	}
-	.project-btn-wrap {
+
+	.pro-btn-container {
+		background: var(--theme-bg-color);
 		position: sticky;
-		bottom: 20px;
+		border-radius: 5px;
+		bottom: 0;
+		width: 100%;
+		padding-bottom: 20px;
+	}
+
+	.project-btn-wrap {
 		width: 100%;
 		display: flex;
 		flex-direction: row;

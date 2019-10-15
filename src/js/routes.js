@@ -6,6 +6,7 @@ import Projects from '../pages/Projects.vue';
 import Tasks from '../pages/Tasks.vue';
 import Profile from '../pages/Profile.vue';
 import OneTask from '../pages/OneTask.vue';
+import Feed from '../pages/Feed.vue';
 
 
 // import DynamicRoutePage from '../pages/dynamic-route.vue';
@@ -32,6 +33,10 @@ var routes = [
   {
     path: '/onetask/',
     component: OneTask,
+  },
+  {
+    path: '/feed/',
+    component: Feed,
   },
   {
     path: '/about/',

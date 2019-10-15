@@ -1,5 +1,6 @@
 <template>
-  <div class="badge" :class="{ 'admin-badge': _admin_badge, 'notification-badge': _notification, 'low': _low, 'med': _med, 'high': _high }">
+   <div class="badge" 
+    :class="{ 'admin-badge': _admin_badge, 'notification-badge': _notification, 'low': _low, 'med': _med, 'high': _high, 'img-placeholder': _img_placeholder }">
     <span v-if="_badge_text">{{_badge_text}}</span>
     <span v-if="_admin_badge">ADMIN</span>
   </div>
@@ -18,7 +19,8 @@ export default {
     '_notification',
     '_low',
     '_med',
-    '_high'
+    '_high',
+    '_img_placeholder'
   ],
 }
 </script>
@@ -74,4 +76,14 @@ export default {
 .high {
   background: #D34242;
 }
+
+.img-placeholder {
+  background: #e9d040;
+  height:  28px;
+  width: 28px;
+  font-size: 16px;
+  font-weight: 500;
+  
+}
+
 </style>

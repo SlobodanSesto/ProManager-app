@@ -22,11 +22,11 @@
             <f7-list-item>
               <div class="nav-header-wrap">
                 <span><b>Pro</b> Manager</span>
-                <f7-button @click="closeRightPanel" class="close-nav-btn">X</f7-button>
+                <f7-button @click="closeRightPanel" class="close-nav-btn"><f7-icon material="clear" size="1.7rem"></f7-icon></f7-button>
               </div>
             </f7-list-item>
             <f7-list-item @click="goToProjects"><span><f7-icon material="layers" size="24px"></f7-icon>   Projects</span></f7-list-item>
-            <f7-list-item @click="goToNotifications"><span><f7-icon material="markunread_mailbox" size="22px"></f7-icon>   Notifications</span></f7-list-item>
+            <f7-list-item @click="goToFeed"><span><f7-icon material="markunread_mailbox" size="22px"></f7-icon>   Notifications</span></f7-list-item>
             <f7-list-item @click="goToProfile"><span><f7-icon material="account_circle" size="22px"></f7-icon>   Profile</span></f7-list-item>
             <f7-list-item v-if="this.getUser" @click="goToProfile"><span><f7-icon material="exit_to_app" size="22px"></f7-icon>   Log out</span></f7-list-item>
           </f7-list>
@@ -139,9 +139,9 @@
       alertLoginData() {
         this.$f7.dialog.alert('Username: ' + this.username + '<br>Password: ' + this.password);
       },
-      goToNotifications() {
+      goToFeed() {
         this.$f7.panel.close();
-
+        this.$f7.views.main.router.navigate('/feed/');
       },
       goToProfile() {
         this.$f7.panel.close();
@@ -238,13 +238,14 @@ div#framework7-root.framework7-root div.panel-sidebar.panel.panel-right.panel-co
   top: 0;
   font-weight: 400;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   font-size: 20px;
   color: var(--f7-theme-color);
 }
 .close-nav-button {
-  height: 20px;
-  width: 20px;
+  height: 1.8rem;
+  width: 1.8rem;
 }
 
 </style>
