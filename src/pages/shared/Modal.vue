@@ -13,7 +13,6 @@
 						<span>Tags: </span>
 						<div class="tags-wrap">
 							<span v-for="(tag, i) in this.project.tags" :key="i">
-								<!-- {{tag.tag_id}} {{tag.tag_text}} -->
 								<badge :_badge_text="tag.tag_text"></badge>
 							</span>
 						</div>

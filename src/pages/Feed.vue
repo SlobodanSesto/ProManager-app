@@ -49,11 +49,6 @@
 </template>
 
 <script>
-  // type: all
-  // searchstring: ""
-  // offset:	0
-  // count:	false
-  //http://695u121.mars-t.mars-hosting.com/mngapi/users/feeds?type=all&searchstring=&offset=0&count=false&sid=zof9wzhw2lNLKMgxrqATobkSmp5eKXLk
   // for endless scroll offset by 20 more each time
   // type: all
   // searchstring: ""
@@ -94,20 +89,6 @@ export default {
       api.getFeed(params).then( res => {
         console.log(res.data);
         this.feed = res.data.data;
-// fed_id: 277194
-// fed_important: 0
-// fed_text: "Djfidudhsiyosyofosogsot"
-// fed_time: "2019-10-15 10:25:25"
-// fed_type: "message"
-// pro_id: 234
-// pro_name: "aaa"
-// tsk_id: 569
-// tsk_id_origin: 569
-// tsk_title: "d"
-// unseen: 0
-// usr_name: "Danilo"
-// usr_surname: "Pusic"
-// usrimg: "users/63/img"
       });
     }
   }

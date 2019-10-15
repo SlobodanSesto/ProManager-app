@@ -2,8 +2,6 @@
 	<f7-page id="projects">
 		<navBar :_title="'Project list'" :_burger="true"></navBar>
 		
-		<!-- input will go here need to see what the requirements are for it
-		weather it needs to filter the current results or fetch from DB matching results -->
 		<f7-input id="search-input" type="text" outline placeholder="Filter items" :value="searchInput" @input="searchInput = $event.target.value " ></f7-input>
 		
 		<f7-block class="project-cards-wrap">

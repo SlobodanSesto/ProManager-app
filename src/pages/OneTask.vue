@@ -135,10 +135,10 @@ export default {
       let params = {
         taskId: this.currentTaskId
       }
-      // api.getOneTask(params).then(res => {
-      //   console.log(res)
-			// 	this.task = res.data.data[0];
-			// });
+      api.getOneTask(params).then(res => {
+        console.log(res)
+				this.task = res.data.data[0];
+			});
 
 			this.filterFeed(this.selectedFilter);
 		}
@@ -161,24 +161,24 @@ export default {
 				type:	val,
 				searchstring: ''
 			}
-			// api.getTaskFeed(this.currentTaskId, feedParams).then( res => {
-			// 	console.log(res);
-			// 	this.taskFeed = res.data.data;
-			// });
+			api.getTaskFeed(this.currentTaskId, feedParams).then( res => {
+				console.log(res);
+				this.taskFeed = res.data.data;
+			});
 		},
 		sendMsg() {
 			// console.log(this.inputMsg);
 			let formData = new FormData();
 			formData.append("type", 'text');
 			formData.append("text", this.inputMsg);
-			// api.sendMessage(this.currentTaskId, formData).then( res => {
-			// 	if(res.data.status === "OK"){
-			// 		this.inputMsg = '';
-			// 		this.filterFeed(this.selectedFilter);
-			// 	}else{
-			// 		console.log(res.data.status);
-			// 	}
-			// })
+			api.sendMessage(this.currentTaskId, formData).then( res => {
+				if(res.data.status === "OK"){
+					this.inputMsg = '';
+					this.filterFeed(this.selectedFilter);
+				}else{
+					console.log(res.data.status);
+				}
+			})
 			// type=file and file=myfile if sending attachment
 		},
 	},
