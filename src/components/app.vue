@@ -136,9 +136,9 @@
       ...mapActions({
         'setModalActive': 'setModalActive',
       }),
-      alertLoginData() {
-        this.$f7.dialog.alert('Username: ' + this.username + '<br>Password: ' + this.password);
-      },
+      // alertLoginData() {
+      //   this.$f7.dialog.alert('Username: ' + this.username + '<br>Password: ' + this.password);
+      // },
       goToFeed() {
         this.$f7.panel.close();
         this.$f7.views.main.router.navigate('/feed/');

@@ -59,9 +59,9 @@
 						</div>
 					</div>
 				</f7-block>
-				<div class="button-container">
+				<div v-if="task" class="button-container">
 					<div class="btn-wrapper">
-						<f7-button fill class="task-btn add-btn">Add task</f7-button>
+						<f7-button fill class="task-btn add-btn" @click="editTask">Edit task</f7-button>
 						<f7-button outline class="task-btn">Notifications</f7-button>
 					</div>
 				</div>
@@ -94,7 +94,7 @@
 				</f7-block>
 				<div class="input-container">
 					<div class="msg-input-wrap">
-						<f7-button fill class="msg-btn "><f7-icon material="attach_file" size="16px"></f7-icon></f7-button>
+						<f7-button fill class="msg-btn" @click="selectFile"><f7-icon material="attach_file" size="16px"></f7-icon></f7-button>
 						<f7-input  class="msg-input" type="text" placeholder="New message" :value="inputMsg" @change="inputMsg = $event.target.value"></f7-input>
 						<f7-button fill class="msg-btn send-btn" @click="sendMsg"><f7-icon material="send" size="16px"></f7-icon></f7-button>
 					</div>
@@ -181,6 +181,12 @@ export default {
 			})
 			// type=file and file=myfile if sending attachment
 		},
+		selectFile() {
+			console.log("todo - select file and upload")
+		},
+		editTask() {
+			this.$f7router.navigate('/edittask/',{ context: { task: this.task } });
+		}
 	},
 }
 </script>
@@ -224,7 +230,7 @@ export default {
 }
 
 .task-info-wrapper {
-	min-height: 85%;
+	min-height: 85vh;
 }
 
 .task-info-wrapper div{
