@@ -4,7 +4,10 @@
 
     <!-- input will go here need to see what the requirements are for it
 		weather it needs to filter the current results or fetch from DB matching results -->
-		<f7-input id="search-input" type="text" outline placeholder="Filter items"></f7-input>
+		<div class="tasks-top-wrap">
+      <f7-input id="search-input" type="text" outline placeholder="Filter items"></f7-input>
+      <f7-button fill class="task-btn add-btn" @click="addTask">Add task</f7-button>
+    </div>
     
 		<f7-block class="project-cards-wrap">
 			<taskCard class="card-comp" 
@@ -28,6 +31,7 @@ export default {
 	data(){
 		return {
 			tasks: null,
+      projectId: null,
 		}
   },
   components: {
@@ -36,7 +40,7 @@ export default {
 	},
   mounted() {
     if (this.$f7route.context) {
-      console.log(this.$f7route.context.proId);
+      this.projectId = this.$f7route.context.proId;
       const params = {
         pro_id: this.$f7route.context.proId,
         created: false,
@@ -52,6 +56,9 @@ export default {
     }
   },
   methods: {
+    addTask() {
+      this.$f7router.navigate('/edittask/', { context: { proId: this.projectId } });
+    },
     // goToTask(id) {
       // let params = {
       //   taskId: id
@@ -103,12 +110,39 @@ export default {
 	background: var(--theme-secondary-color);
 }
 
+.tasks-top-wrap {
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 #search-input {
 	padding-top: 5px;
-	margin-left: 16px;
-	line-height: 24px;
+	margin-left: 1rem;
+	line-height: 1.5rem;
 	font-size: 14px;
-	height: 24px;
+	height: 1.5rem;
 	width: 200px;
 }
+
+.task-btn {
+	height: 1.5rem;
+  margin-right: 1rem;
+	width: 80px;
+	background: var(--theme-bg-color);
+	border: 1px solid var(--f7-theme-color);
+	font-family: 'Saira', sans-serif;
+	font-weight: 400;
+	text-transform: capitalize;
+	font-size: 13px;
+	line-height: 1.5rem;
+}
+
+.add-btn {
+	background: #19D082;
+	border: 1px solid #19D082;
+}
+
 </style>
