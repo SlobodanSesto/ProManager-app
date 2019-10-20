@@ -8,4 +8,7 @@ export default {
 	getModalActive: (state) => {
 		return state.modalActive;
 	},
+	getCurrentRoute: (state) => {
+		return state.currentRoute;
+	},
 }
