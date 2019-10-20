@@ -44,8 +44,9 @@
 
       <div v-if="task" class="button-container">
         <div class="btn-wrapper">
-          <f7-button fill class="task-btn add-btn">Create</f7-button>
-          <f7-button outline class="task-btn">Cancel</f7-button>
+          <f7-button v-if="!editing" fill class="task-btn add-btn">Create</f7-button>
+          <f7-button v-if="editing" fill class="task-btn add-btn">Save</f7-button>
+          <f7-button outline @click="goBack" class="task-btn">Cancel</f7-button>
         </div>
       </div>
 
@@ -105,6 +106,11 @@ export default {
         usersarray: "",
       }
     }
+  },
+  methods: {
+    goBack() {
+      this.$f7.views.main.router.back()
+    },
   }
 }
 </script>
@@ -113,4 +119,9 @@ export default {
 #add-edit {
   background: var(--theme-bg-color);
 }
+
+.add-btn {
+	background: var(--f7-theme-color);
+}
+
 </style>

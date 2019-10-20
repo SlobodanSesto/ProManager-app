@@ -9,8 +9,11 @@
 			{{user.surname}}
 			{{user.usr_id}}
 			{{user.utc}} -->
-			<div class="img-wrapper">
-				<div class="pro-img"></div>
+			<div @click="selectImage" class="img-wrapper">
+				<div  class="pro-img">
+					<img v-if="show && !imgChanged" :src="dbImg" alt="">
+					<img v-if="imgChanged" :src="imgURLCopy" alt="">
+				</div>
 			</div>
 			<div class="info-wrapper">
 				<div class="info-line">
@@ -20,7 +23,11 @@
 						</f7-col>
 						<f7-col>
 							<span>
-								<f7-input type="text" clear-button></f7-input>
+								<f7-input class="input-field" 
+								type="text" 
+								clear-button 
+								:value="user.name" 
+								@input='user.name = $event.target.value'></f7-input>
 							</span>
 						</f7-col>
 					</f7-row>	
@@ -32,7 +39,11 @@
 						</f7-col>
 						<f7-col>
 							<span>
-								<f7-input type="text" clear-button></f7-input>
+								<f7-input class="input-field" 
+								type="text" 
+								clear-button 
+								:value="user.surname" 
+								@input='user.surname = $event.target.value'></f7-input>
 							</span>
 						</f7-col>
 					</f7-row>	
@@ -44,7 +55,11 @@
 						</f7-col>
 						<f7-col>
 							<span>
-								<f7-input type="text" clear-button></f7-input>
+								<f7-input class="input-field" 
+								type="email" 
+								clear-button 
+								:value="user.email" 
+								@input='user.email = $event.target.value'></f7-input>
 							</span>
 						</f7-col>
 					</f7-row>	
@@ -56,7 +71,11 @@
 						</f7-col>
 						<f7-col>
 							<span>
-								<f7-input type="text" clear-button></f7-input>
+								<f7-input class="input-field" 
+								type="password" 
+								clear-button
+								:value="pass" 
+								@input='pass = $event.target.value'></f7-input>
 							</span>
 						</f7-col>
 					</f7-row>	
@@ -68,7 +87,11 @@
 						</f7-col>
 						<f7-col>
 							<span>
-								<f7-input type="text" clear-button></f7-input>
+								<f7-input class="input-field" 
+								type="password" 
+								clear-button
+								:value="confPass" 
+								@input='confPass = $event.target.value'></f7-input>
 							</span>
 						</f7-col>
 					</f7-row>	
@@ -101,8 +124,8 @@
 			</div>
 			<div class="button-container">
 				<div class="btn-wrapper">
-					<f7-button fill class="profile-btn save-btn" @click="saveChanges">Save</f7-button>
-					<f7-button outline class="profile-btn">Cancel</f7-button>
+					<f7-button fill class="task-btn save-btn" @click="saveChanges">Save</f7-button>
+					<f7-button outline class="task-btn" @click="goBack">Cancel</f7-button>
 				</div>
 			</div>
 		</div>
@@ -112,11 +135,21 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import navBar from './shared/NavBar.vue';
+import api from '../api/index';
 
 export default {
 	data() {
     return {
 			user: null,
+			imgURLCopy: null,
+			imageData: null,
+			show: false,
+			dbImg: null,
+			infoEdited: false,
+			imgChanged: false,
+			ct: 0,
+			pass: '',
+			confPass: '',
     }
 	},
 	components: {
@@ -129,11 +162,123 @@ export default {
 	},
 	mounted() {
 		this.user = this.getUser;
+		api.hasImage().then( res => {
+			if(res.data.data === 1) {
+				this.dbImg = 'http://695u121.mars-t.mars-hosting.com/mngapi/auth/users/img?sid=' + localStorage.getItem("sid");
+				this.show = true;
+			}
+		})
+
 	},
 	methods: {
+		selectImage() {
+			let options = {
+        quality: 80,
+          destinationType: Camera.DestinationType.DATA_URL,
+          sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+          mediaType: Camera.MediaType.PICTURE,
+          encodingType: Camera.EncodingType.PNG,
+      };
+      navigator.camera.getPicture(
+        this.cameraSuccess,
+        this.cameraError,
+        options
+      );
+		},
+		b64toBlob(b64Data, contentType, sliceSize) {
+      contentType = contentType || ''
+      sliceSize = sliceSize || 512
+      var byteCharacters = atob(b64Data)
+      var byteArrays = []
+      for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+				var slice = byteCharacters.slice(offset, offset + sliceSize)
+				var byteNumbers = new Array(slice.length)
+				for (var i = 0; i < slice.length; i++) {
+					byteNumbers[i] = slice.charCodeAt(i)
+				}
+				var byteArray = new Uint8Array(byteNumbers)
+				byteArrays.push(byteArray)
+			}
+			var blob = new Blob(byteArrays, {type: contentType})
+			return blob
+    },
+    // cameraSuccess(dataURL) {
+    //   console.log("success", dataURL);
+    //   dataURL = 'data:image/jpeg;base64,' + dataURL;
+    //   this.imgURLCopy = dataURL;
+		// 	this.imgChanged = true;
+		// 	var block = dataURL.split(';')
+		// 	var contentType = block[0].split(':')[1]
+		// 	var realData = block[1].split(',')[1]
+		// 	this.imageData = this.b64toBlob(realData, contentType);
+    // },
+    // cameraError(e) {
+    //   console.log(e);
+		// },
+		cameraSuccess(dataURL) {
+      console.log("success", dataURL);
+      this.imgURLCopy = 'data:image/jpeg;base64,' + dataURL;
+			// this.loadXHR(dataURL).then( blob => {
+			// 	// here the image is a blob
+			// 	this.imageData = blob;
+			// 	this.imgChanged = true;
+			// });
+			fetch(this.imgURLCopy)
+				.then(res => res.blob())
+				.then(blob => {
+					console.log(" blob done ")
+					this.imageData = blob;
+					this.imgChanged = true;
+				})
+
+		},
+		// loadXHR(url) {
+    // 	return new Promise(function(resolve, reject) {
+    //     try {
+		// 			var xhr = new XMLHttpRequest();
+		// 			xhr.open("GET", url);
+		// 			xhr.responseType = "blob";
+		// 			xhr.onerror = function() {reject("Network error.")};
+		// 			xhr.onload = function() {
+		// 				if (xhr.status === 200) {resolve(xhr.response)}
+		// 				else {reject("Loading error:" + xhr.statusText)}
+		// 			};
+		// 			xhr.send();
+    //     }
+    //     catch(err) {reject(err.message)}
+  	// 	});
+		// },
+    cameraError(e) {
+      console.log(e);
+		},
+
 		saveChanges() {
 			// todo save changes and push home
-			this.$f7router.navigate('/projects/');
+			if(this.pass === this.confPass) {
+				if(this.pass !== '' || this.infoEdited || this.imgChanged) {
+					if(this.imgChanged) {
+						let formData = new FormData();
+						formData.append("img", this.imageData);
+						api.saveNewImage(formData).then( response => {
+							console.log(response);
+						})
+					}
+					let data = new FormData();
+					data.append("email", this.user.email);
+					data.append("gatemail", this.user.gatemail);
+					data.append("name", this.user.name);
+					data.append("surname", this.user.surname);
+					data.append("pass", this.confPass);
+					api.saveUserInfo(data).then( res => {
+						console.log(res)
+					})
+					this.$f7router.navigate('/projects/');
+				}
+				this.$f7router.navigate('/projects/');
+			}
+		},
+		goBack() {
+			this.$f7.views.main.router.back()
 		},
 		changeTheme(theme) {
 			//setting dark
@@ -155,6 +300,18 @@ export default {
 			// bg #ffffff
 			// 2nd #808080
 			// primary #31353e
+		}
+	}, 
+	watch: {
+		user: {
+      handler: function() {
+				if(this.ct >= 1) {
+					console.log("user info changed");
+					this.infoEdited = true;
+				}
+				this.ct++;
+			},
+			deep: true
 		}
 	}
 }
@@ -179,6 +336,13 @@ export default {
 	margin: 30px 0;
 }
 
+.img-wrapper img {
+	width: 100px;
+	height: 100px;
+	object-fit: cover;
+	border-radius: 5px;
+}
+
 .pro-img {
 	border-radius: 5px;
 	width: 100px;
@@ -193,8 +357,9 @@ export default {
 	font-family: 'Saira', sans-serif;
 	font-size: 16px;
 }
-input {
-	border: 1px solid var(--theme-font-color) !important;
+.input-field {
+	border-bottom: 1px solid var(--theme-font-color);
+	z-index: 0;
 }
 .info-line {
 	height: 45px;
@@ -222,7 +387,7 @@ input {
 	border: 1px solid red;
 } */
 
-.btn-wrapper {
+/* .btn-wrapper {
 	position: fixed;
 	right: 0;
 	bottom: 20px;
@@ -241,7 +406,7 @@ input {
 	text-transform: capitalize;
 	font-size: 16px;
 	line-height: 2.2rem;
-}
+} */
 
 .save-btn {
 	background: var(--f7-theme-color);

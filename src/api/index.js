@@ -58,4 +58,28 @@ export default {
 			params: params
 		});
 	},
+	hasImage: (params) => {
+		return baseURL({
+			url: 'auth/users/hasimage',
+			method: 'GET',
+			params: params
+		});
+	},
+	saveUserInfo: (formData) => {
+		return baseURL({
+			url: 'auth/users',
+			method: 'PUT',
+			data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' }
+		});
+	},
+	saveNewImage: (formData) => {
+		return baseURL({
+			url: 'auth/users/img',
+			method: 'PUT',
+			data: formData,
+      headers: { 'Content-Type': 'multipart/form-data' }
+		});
+	},
+
 }

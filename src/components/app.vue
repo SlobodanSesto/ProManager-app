@@ -28,7 +28,7 @@
             <f7-list-item @click="goToProjects"><span><f7-icon material="layers" size="24px"></f7-icon>   Projects</span></f7-list-item>
             <f7-list-item @click="goToFeed"><span><f7-icon material="markunread_mailbox" size="22px"></f7-icon>   Notifications</span></f7-list-item>
             <f7-list-item @click="goToProfile"><span><f7-icon material="account_circle" size="22px"></f7-icon>   Profile</span></f7-list-item>
-            <f7-list-item v-if="this.getUser" @click="goToProfile"><span><f7-icon material="exit_to_app" size="22px"></f7-icon>   Log out</span></f7-list-item>
+            <f7-list-item v-if="this.getUser" @click="logOut"><span><f7-icon material="exit_to_app" size="22px"></f7-icon>   Log out</span></f7-list-item>
           </f7-list>
         </f7-block>
       </f7-page>
@@ -135,6 +135,7 @@
     methods: {
       ...mapActions({
         'setModalActive': 'setModalActive',
+        'logUserOut': 'logUserOut',
       }),
       // alertLoginData() {
       //   this.$f7.dialog.alert('Username: ' + this.username + '<br>Password: ' + this.password);
@@ -153,7 +154,13 @@
       },
       closeRightPanel() {
         this.$f7.panel.close();
-      }
+      },
+      logOut() {
+        this.logUserOut();
+        this.$f7.panel.right.close();
+        this.$f7.views.main.router.navigate('/');
+      },
+
     },
     computed: {
       ...mapGetters({

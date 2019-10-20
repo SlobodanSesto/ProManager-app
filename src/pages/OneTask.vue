@@ -62,7 +62,7 @@
 				<div v-if="task" class="button-container">
 					<div class="btn-wrapper">
 						<f7-button fill class="task-btn add-btn" @click="editTask">Edit task</f7-button>
-						<f7-button outline class="task-btn">Notifications</f7-button>
+						<f7-button outline @click="goToNotifications" class="task-btn">Notifications</f7-button>
 					</div>
 				</div>
 			</f7-tab>
@@ -153,6 +153,12 @@ export default {
 				);
 			}
 		},
+		selectFile() {
+			console.log("todo - select file and upload")
+			// select file
+			// alert with are you sure you want to upload
+			// then upload and refresh feed
+		},
 		filterFeed(val) {
 			this.selectedFilter = val;
 			let feedParams = {
@@ -181,11 +187,11 @@ export default {
 			})
 			// type=file and file=myfile if sending attachment
 		},
-		selectFile() {
-			console.log("todo - select file and upload")
-		},
 		editTask() {
 			this.$f7router.navigate('/edittask/',{ context: { task: this.task } });
+		},
+		goToNotifications() {
+			this.$f7.views.main.router.navigate('/feed/');
 		}
 	},
 }
@@ -283,39 +289,6 @@ export default {
 	margin-right: 10px;
 	margin-top: -3px;
 }
-
-.button-container {
-	background: var(--theme-bg-color);
-	position: sticky;
-	left: 0;
-	bottom: 0px;
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	z-index: 5;
-}
-
-.btn-wrapper {
-	margin-bottom: 20px;
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-evenly;
-}
-
-.task-btn {
-	height: 40px;
-	width: 40%;
-	background: var(--theme-bg-color);
-	border: 1px solid var(--f7-theme-color);
-	font-family: 'Saira', sans-serif;
-	font-weight: 400;
-	text-transform: capitalize;
-	font-size: 16px;
-	line-height: 2.5rem;
-}
-
 .add-btn {
 	background: #19D082;
 	border: 1px solid #19D082;

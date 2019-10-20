@@ -98,8 +98,8 @@ import navBar from './shared/NavBar.vue';
 export default {
   data() {
     return {
-      email: "dpusic93@gmail.com",
-      pass: "123",
+      email: "test@test.com",
+      pass: "test",
     }
   },
   components: {
