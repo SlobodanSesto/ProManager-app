@@ -10,7 +10,7 @@ const state = {
     user: null,
     projects: [],
     modalActive: false,
-    
+    currentRoute: null,
 }
 export default new Vuex.Store({
   state,

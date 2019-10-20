@@ -97,6 +97,7 @@ export default {
 
 .img-wrap img {
   border-radius: 4px;
+  object-fit: cover;
   height: 60px;
   width: 60px;
 }

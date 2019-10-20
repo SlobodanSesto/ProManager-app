@@ -44,6 +44,7 @@ export default {
 		...mapActions({
 			'fetchProjects' : 'fetchProjects',
 			'setModalActive': 'setModalActive',
+			'setCurrentRoute': 'setCurrentRoute',
 		}),
 		openModal(pro) {
 			// console.log(pro)
@@ -59,6 +60,7 @@ export default {
 		}
 	},
 	mounted() {
+		this.setCurrentRoute('/projects/');
 		this.fetchProjects().then( () => {
 			this.projectsToShow = this.getProjects;
 		});

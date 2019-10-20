@@ -20,4 +20,8 @@ export default {
 		// console.log(params)
 		return commit('MODAL_STATE', params);
 	},
+	setCurrentRoute: ({commit}, params) => {
+		console.log(params)
+		return commit('CURRENT_ROUTE', params);
+	},
 }

@@ -7,5 +7,9 @@ export default {
   },
   MODAL_STATE(state, payload) {
     state.modalActive = payload;
-  }
+  },
+  CURRENT_ROUTE(state, payload) {
+    state.currentRoute = payload;
+  },
+
 }
