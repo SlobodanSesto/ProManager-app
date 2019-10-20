@@ -57,6 +57,7 @@
 import api from '../api/index';
 import navBar from './shared/NavBar.vue';
 import msgCard from './shared/MsgCard.vue';
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   data() {
@@ -72,8 +73,12 @@ export default {
   mounted() {
     // get feed
     this.updateFeed();
+    this.setCurrentRoute('/feed/');
   },
   methods: {
+    ...mapActions({
+			'setCurrentRoute': 'setCurrentRoute',
+		}),
     filterFeed(filter) {
       this.selectedFeedFilter = filter;
       this.updateFeed();

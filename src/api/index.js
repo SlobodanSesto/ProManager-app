@@ -81,5 +81,16 @@ export default {
       headers: { 'Content-Type': 'multipart/form-data' }
 		});
 	},
-
+	getAllTags: (id) => {
+		return baseURL({
+			url: `projects/${id}/alltags`,
+			method: 'GET'
+		});
+	},
+	getProjectUsers: (id) => {
+		return baseURL({
+			url: `projects/${id}/users`,
+			method: 'GET'
+		});
+	},
 }

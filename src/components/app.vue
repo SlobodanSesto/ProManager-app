@@ -25,9 +25,14 @@
                 <f7-button @click="closeRightPanel" class="close-nav-btn"><f7-icon material="clear" size="1.7rem"></f7-icon></f7-button>
               </div>
             </f7-list-item>
-            <f7-list-item @click="goToProjects"><span><f7-icon material="layers" size="24px"></f7-icon>   Projects</span></f7-list-item>
-            <f7-list-item @click="goToFeed"><span><f7-icon material="markunread_mailbox" size="22px"></f7-icon>   Notifications</span></f7-list-item>
-            <f7-list-item @click="goToProfile"><span><f7-icon material="account_circle" size="22px"></f7-icon>   Profile</span></f7-list-item>
+            <f7-list-item :class="{ 'hide-item': this.getRoute === '/projects/' }" @click="goToProjects">
+              <span><f7-icon material="layers" size="24px"></f7-icon>   Projects</span>
+            </f7-list-item>
+            <f7-list-item :class="{ 'hide-item': this.getRoute === '/feed/' }" @click="goToFeed">
+              <span><f7-icon material="markunread_mailbox" size="22px"></f7-icon>   Notifications</span></f7-list-item>
+            <f7-list-item :class="{ 'hide-item': this.getRoute === '/profile/' }" @click="goToProfile">
+              <span><f7-icon material="account_circle" size="22px"></f7-icon>   Profile</span>
+            </f7-list-item>
             <f7-list-item v-if="this.getUser" @click="logOut"><span><f7-icon material="exit_to_app" size="22px"></f7-icon>   Log out</span></f7-list-item>
           </f7-list>
         </f7-block>
@@ -166,7 +171,11 @@
       ...mapGetters({
         'getModalActive': 'getModalActive',
         'getUser': 'getUser', 
-      })
+        'getCurrentRoute': 'getCurrentRoute',
+      }),
+      getRoute() {
+        return this.getCurrentRoute;
+      },
 	  },
     mounted() {
       this.$f7ready((f7) => {

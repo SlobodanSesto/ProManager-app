@@ -27,7 +27,40 @@
 
         <!-- TO-DO! add assign to and tags inputs 
           figure out exactly what the expected behaviour is supposed to be -->
-
+         <!-- TO-DO debug and test selecting and make a div to display selection with a delete option 
+        *********
+        ***^
+        ********
+        *********
+        **********-->
+        <f7-list-input
+          label="Assign to: "
+          floating-label
+          type="select"
+          defaultValue=""
+          placeholder="Please choose..."
+          @input="addUserToTask($event.target.key)">
+          <option value=""></option>
+          <option 
+            v-for="(user, i) in availableUsers" 
+            :key="i"
+            :value="user.id"
+            >{{ user.email }}</option>
+        </f7-list-input>
+        <f7-list-input
+          label="Select tags (optional)"
+          floating-label
+          type="select"
+          defaultValue=""
+          placeholder="Please choose..."
+          @input="addTagToTask()">
+          <option value=""></option>
+          <option 
+            v-for="(tag, i) in availableTags" 
+            :key="i"
+            :value="tag.tag_text"
+            @input="addTagToTask(tag.tag_text)">{{ tag.tag_text }}</option>
+        </f7-list-input>
         <f7-list-input
           label="Priority"
           floating-label
@@ -50,7 +83,7 @@
         </div>
       </div>
 
-      <p v-if="task">{{this.task}}</p>
+      <p v-if="task">{{getCurTask}}</p>
       <h2 v-if="!editing">Add a new task</h2>
     </f7-block>
   </f7-page>
@@ -77,6 +110,7 @@
 // usersarray: "[63]"
 
 import navBar from './shared/NavBar.vue';
+import api from '../api/index';
 
 export default {
   components: {
@@ -90,11 +124,13 @@ export default {
   },
   mounted() {
     if (this.$f7route.context.task) {
-      console.log(this.$f7route.context.task);
+       // console.log(this.$f7route.context.task);
+      this.getAvailableData(this.$f7route.context.task.pro_id);
       this.task = this.$f7route.context.task;
       this.editing = true;
     } else if (this.$f7route.context.proId) {
-      console.log(this.$f7route.context.proId);
+      // console.log(this.$f7route.context.proId);
+      this.getAvailableData(this.$f7route.context.proId);
       this.task = {
         deadline: "",
         description: "",
@@ -103,7 +139,7 @@ export default {
         tagarray: [],
         title: "",
         type: "",
-        usersarray: "",
+        usersarray: [],
       }
     }
   },
@@ -111,6 +147,30 @@ export default {
     goBack() {
       this.$f7.views.main.router.back()
     },
+    getAvailableData(id) {
+      api.getAllTags(id).then( res => {
+        this.availableTags = res.data.data;
+      });
+      api.getProjectUsers(id).then( res => {
+        this.availableUsers = res.data.data;
+      });
+    },
+    addUserToTask(id, index) {
+      // if id is not already in taskToSend.usersarray
+      // push id on to taskToSend.usersarray
+      // the display arr in some div with delete buttons 
+      console.log(this.task.usersarray);
+      this.task.usersarray.push(this.availableUsers.splice(index,1));
+      console.log(this.task.usersarray);
+    },
+    addTagToTask(tag) {
+      console.log(tag);
+    }
+  },
+  computed: {
+    getCurTask() {
+      return this.task;
+    }
   }
 }
 </script>

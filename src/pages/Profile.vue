@@ -103,7 +103,7 @@
 						</f7-col>
 						<f7-col>
 							<span>
-								<f7-list-item checkbox ></f7-list-item>
+								<f7-list-item checkbox :checked="user.getemail > 0" @change="user.getemail = $event.target.checked" ></f7-list-item>
 							</span>
 						</f7-col>
 					</f7-row>	
@@ -161,6 +161,7 @@ export default {
     })
 	},
 	mounted() {
+		this.setCurrentRoute('/profile/');
 		this.user = this.getUser;
 		api.hasImage().then( res => {
 			if(res.data.data === 1) {
@@ -171,6 +172,9 @@ export default {
 
 	},
 	methods: {
+		...mapActions({
+			'setCurrentRoute': 'setCurrentRoute',
+		}),
 		selectImage() {
 			let options = {
         quality: 80,
@@ -265,10 +269,15 @@ export default {
 					}
 					let data = new FormData();
 					data.append("email", this.user.email);
-					data.append("gatemail", this.user.gatemail);
 					data.append("name", this.user.name);
 					data.append("surname", this.user.surname);
 					data.append("pass", this.confPass);
+					if(this.user.getemail) {
+						data.append("gatemail", 1);
+					} else {
+						data.append("gatemail", 0);
+					}
+					
 					api.saveUserInfo(data).then( res => {
 						console.log(res)
 					})
