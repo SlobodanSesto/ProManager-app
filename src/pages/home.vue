@@ -126,17 +126,19 @@ export default {
       //testing
       // this.$f7router.navigate('/projects/');
       api.loginApi(params).then( res => {
-        console.log(res);
+        // console.log(res);
         if(res.data.status === 'ERR') {
           // display failed login msg
         } else if (res.data.status === 'OK') {
           // push to /projects route
-          this.setUser(res.data.user);
-          localStorage.setItem('sid', res.data.sid);
+          // this.setUser(res.data.data.user);
+          localStorage.setItem('token', res.data.data.auth);
+          // console.log(localStorage.getItem('token'));
           this.$f7router.navigate('/projects/');
-          console.log(this.getUser)
+          // console.log(this.getUser)
         } else {
           // an error occured
+          console.log(res)
         }
       });
       

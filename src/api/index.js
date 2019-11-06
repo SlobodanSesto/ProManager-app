@@ -5,7 +5,7 @@ export default {
 		return baseURL({
 			url: 'auth/login',
 			method: 'POST',
-			params: params
+			data: params
 		});
 	},
 	projects: (params) => {

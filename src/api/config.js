@@ -6,17 +6,16 @@ export const baseURL = axios.create({
 
 baseURL.interceptors.request.use(config => {
   try {
-    let sid = localStorage.getItem("sid");
-    if (!sid) {
-      console.log('No sid');
+    let token = localStorage.getItem("token");
+    if (token == 'undefined' || token == undefined || token === null) {
+      console.log('No token');
       return config;
-    }
-    if (!config.params) {
-      config.params = {
-        sid: sid
-      };
+    } else if (!config.headers) {
+      config.headers = {
+        Authorization : "bearer " + token
+      }
     } else {
-      config.params.sid = sid;
+      config.headers.Authorization = "bearer " + token;
     }
   } catch (e) {
     console.log('ERR', e);
