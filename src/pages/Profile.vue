@@ -163,13 +163,12 @@ export default {
 	mounted() {
 		this.setCurrentRoute('/profile/');
 		this.user = this.getUser;
-		api.hasImage().then( res => {
-			if(res.data.data === 1) {
-				this.dbImg = 'http://695u121.mars-t.mars-hosting.com/mngapi/auth/users/img?sid=' + localStorage.getItem("sid");
-				this.show = true;
-			}
-		})
-
+		// api.hasImage().then( res => {
+		// 	if(res.data.data === 1) {
+		// 		this.dbImg = 'http://695u121.mars-t.mars-hosting.com/mngapi/auth/users/img?sid=' + localStorage.getItem("sid");
+		// 		this.show = true;
+		// 	}
+		// })
 	},
 	methods: {
 		...mapActions({
@@ -287,6 +286,7 @@ export default {
 			}
 		},
 		goBack() {
+			this.setCurrentRoute('/');
 			this.$f7.views.main.router.back()
 		},
 		changeTheme(theme) {

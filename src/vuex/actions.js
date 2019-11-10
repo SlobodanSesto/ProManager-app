@@ -2,7 +2,7 @@ import api from '../api/index';
 
 export default {
 	logUserOut: ({commit}, params) => {
-		localStorage.removeItem('sid');
+		localStorage.removeItem('token');
 		commit('STORE_USER', null);
 		console.log('user logged out');
 	},

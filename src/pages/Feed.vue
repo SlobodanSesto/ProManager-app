@@ -52,8 +52,8 @@
   // for endless scroll offset by 20 more each time
   // type: all
   // searchstring: ""
-  // offset:	20
-  // count:	false
+  // offset:  20
+  // count: false
 import api from '../api/index';
 import navBar from './shared/NavBar.vue';
 import msgCard from './shared/MsgCard.vue';

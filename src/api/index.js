@@ -8,6 +8,13 @@ export default {
 			data: params
 		});
 	},
+	tokenAuth: (params) => {
+		return baseURL({
+			url: 'auth/jwt/auto-login',
+			method: 'POST',
+			data: params
+		});
+	},
 	projects: (params) => {
 		return baseURL({
 			url: 'projects',

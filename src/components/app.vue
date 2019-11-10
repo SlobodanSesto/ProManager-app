@@ -141,6 +141,7 @@
       ...mapActions({
         'setModalActive': 'setModalActive',
         'logUserOut': 'logUserOut',
+        'setCurrentRoute': 'setCurrentRoute',
       }),
       // alertLoginData() {
       //   this.$f7.dialog.alert('Username: ' + this.username + '<br>Password: ' + this.password);
@@ -162,7 +163,7 @@
       },
       logOut() {
         this.logUserOut();
-        this.$f7.panel.right.close();
+        this.$f7.panel.close();
         this.$f7.views.main.router.navigate('/');
       },
 
@@ -211,7 +212,8 @@
         }else if(this.$f7.panel.right.opened){
           this.$f7.panel.close();
         }else{
-          this.$f7.views.main.router.back()
+          this.setCurrentRoute('/');
+          this.$f7.views.main.router.back();
         }
       	return true;
       }, false);

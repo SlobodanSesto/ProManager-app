@@ -12,10 +12,10 @@ baseURL.interceptors.request.use(config => {
       return config;
     } else if (!config.headers) {
       config.headers = {
-        Authorization : "bearer " + token
+        Authorization : "Bearer " + token
       }
     } else {
-      config.headers.Authorization = "bearer " + token;
+      config.headers.Authorization = "Bearer " + token;
     }
   } catch (e) {
     console.log('ERR', e);

@@ -111,7 +111,20 @@ export default {
     })
   },
   mounted() {
-
+    let token = localStorage.getItem("token");
+    console.log(token);
+    if (token != 'undefined' && token != undefined && token !== null) {
+      api.tokenAuth()
+      .then( res => {
+        if (res.data.data.user) {
+          this.setUser(res.data.data.user);
+          this.$f7router.navigate('/projects/');
+        }
+      })
+      .catch(function (error) {
+        // TO-DO handle errors if needed
+      });
+    }
   },
   methods: {
     ...mapActions({
@@ -123,7 +136,7 @@ export default {
         email: this.email,
         pass: this.pass
       }
-      //testing
+      // testing
       // this.$f7router.navigate('/projects/');
       api.loginApi(params).then( res => {
         // console.log(res);
@@ -131,7 +144,7 @@ export default {
           // display failed login msg
         } else if (res.data.status === 'OK') {
           // push to /projects route
-          // this.setUser(res.data.data.user);
+          this.setUser(res.data.data.user);
           localStorage.setItem('token', res.data.data.auth);
           // console.log(localStorage.getItem('token'));
           this.$f7router.navigate('/projects/');
